@@ -1,0 +1,23 @@
+/*
+ * motors.h
+ *
+ *  Created on: 3 May 2024
+ *      Author: Ahmed
+ */
+
+#ifndef HAL_MOTORS_MOTORS_H_
+#define HAL_MOTORS_MOTORS_H_
+
+
+
+#define MOTORA_PORT                               GPIOB
+#define MOTORA_PORT_NUMBER                        PORTB
+#define MOTORA_PIN_CLK_WISE                       PIN_3     // CLK  stands for clockwise
+#define MOTORA_PIN_CCLK_WISE                      PIN_3     // CCLK stands for counterclockwise
+
+
+void HAL_MotorsInit(void);
+
+
+
+#endif /* HAL_MOTORS_MOTORS_H_ */

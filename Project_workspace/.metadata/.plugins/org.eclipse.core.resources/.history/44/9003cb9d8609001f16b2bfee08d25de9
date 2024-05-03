@@ -1,0 +1,48 @@
+/*
+ * window_switch.c
+ *
+ *  Created on: 3 May 2024
+ *      Author: Ahmed
+ */
+
+#include "window_switch.h"
+
+void HAL_windowInit(void){
+    pin_config_t config;
+
+    MCAL_GPIO_Init(DRIVER_WINDOW_PORT_NUMBER);
+    MCAL_GPIO_Init(PASSENGER_WINDOW_PORT_NUMBER);
+
+    /* For driver window up switch */
+    config.pinNumber = DRIVER_WINDOW_UP_SWITCH_PIN;
+    config.direction = MCAL_GPIO_DIRECTION_INPUT;
+    config.outputMode = MCAL_GPIO_OUTPUT_MODE_PULL_UP;
+    config.outputSpeed = MCAL_GPIO_OUTPUT_SPEED_NONE;
+    config.alterFunc = MCAL_GPIO_ALTERFUNC_NONE;
+    MCAL_GPIO_Pin_Init(DRIVER_WINDOW_PORT, &config);
+
+    /* For driver window down switch */
+    config.pinNumber = DRIVER_WINDOW_DOWN_SWITCH_PIN;
+    MCAL_GPIO_Pin_Init(DRIVER_WINDOW_PORT, &config);
+
+    /* For passenger window up switch */
+    config.pinNumber = PASSENGER_WINDOW_UP_SWITCH_PIN;
+    config.direction = MCAL_GPIO_DIRECTION_INPUT;
+    config.outputMode = MCAL_GPIO_OUTPUT_MODE_PULL_UP;
+    config.outputSpeed = MCAL_GPIO_OUTPUT_SPEED_NONE;
+    config.alterFunc = MCAL_GPIO_ALTERFUNC_NONE;
+    MCAL_GPIO_Pin_Init(PASSENGER_WINDOW_PORT, &config);
+
+    /* For passenger window down switch */
+    config.pinNumber = DRIVER_WINDOW_DOWN_SWITCH_PIN;
+    MCAL_GPIO_Pin_Init(PASSENGER_WINDOW_DOWN_SWITCH_PIN, &config);
+
+
+}
+
+uint8 GPIO_DriverUpGetState(void){
+    uint8 state = 0;
+    MCAL_GPIO_ReadPin(DRIVER_WINDOW_PORT, DRIVER_WINDOW_UP_SWITCH_PIN, &state);
+    return ((GPIO_PORTF_DATA_REG >> 4) & 0x01);
+}
+
