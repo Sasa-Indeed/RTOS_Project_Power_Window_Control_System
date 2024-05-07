@@ -26,6 +26,16 @@ void GPIO_BuiltinButtonsLedsInit(void){
     GPIO_PORTF_DATA_REG  &= ~(1<<1) & ~(1<<2) & ~(1<<3);      /* Clear bits 1, 2 & 3 in Data register to turn off the LEDs */
 }
 
+void GPIO_LEDInit(void){
+    SYSCTL_RCGCGPIO_REG |= 0x20;
+    while(!(SYSCTL_PRGPIO_REG & 0x20));
+
+    //for LEDs
+    GPIO_PORTF_LOCK_REG   = 0x4C4F434B;
+    GPIO_PORTF_DIR_REG   |= ((1<<1) | (1<<2) | (1<<3));       /* Configure PF1, PF2 & PF3 as output pins */
+    GPIO_PORTF_DATA_REG  &= ~(1<<1) & ~(1<<2) & ~(1<<3);      /* Clear bits 1, 2 & 3 in Data register to turn off the LEDs */
+}
+
 void MCAL_GPIO_Init(uint8 portNumber){
 
   //1. Initializing clock
@@ -36,7 +46,7 @@ void MCAL_GPIO_Init(uint8 portNumber){
 }
 
 void MCAL_GPIO_Pin_Init(vuint32_ptr PORTx, pin_config_t * config){
-
+    GPIOUnlockPin(GPIO_PORTD_BASE, GPIO_PIN_3 | GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2);
    //1. Unlocking port
   *((uint32_ptr)((uint8_ptr)PORTx + GPIOLOCK_BASE))  = 0x4C4F434B;
 

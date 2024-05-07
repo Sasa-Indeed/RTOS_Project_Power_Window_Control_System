@@ -11,7 +11,6 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main.obj" \
-"./tm4c123gh6pm_startup_ccs.obj" \
 "./FreeRTOS/Source/event_groups.obj" \
 "./FreeRTOS/Source/list.obj" \
 "./FreeRTOS/Source/queue.obj" \
@@ -25,9 +24,11 @@ ORDERED_OBJS += \
 "./MCAL/GPIO/gpio.obj" \
 "./MCAL/GPTM/GPTM.obj" \
 "./MCAL/UART/uart0.obj" \
+"./targetConfigs/tm4c123gh6pm_startup_ccs.obj" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
+-l"D:/ASU/4-Senior1/Fall 23/CSE211 Introduction to Embedded Systems/Tivaware/driverlib/ccs/Debug/driverlib.lib" \
 
 -include ../makefile.init
 
@@ -45,6 +46,7 @@ RMDIR := RMDIR /S/Q
 -include MCAL/GPIO/subdir_vars.mk
 -include MCAL/GPTM/subdir_vars.mk
 -include MCAL/UART/subdir_vars.mk
+-include targetConfigs/subdir_vars.mk
 -include subdir_rules.mk
 -include FreeRTOS/Source/subdir_rules.mk
 -include FreeRTOS/Source/portable/CCS/ARM_CM4F/subdir_rules.mk
@@ -54,6 +56,7 @@ RMDIR := RMDIR /S/Q
 -include MCAL/GPIO/subdir_rules.mk
 -include MCAL/GPTM/subdir_rules.mk
 -include MCAL/UART/subdir_rules.mk
+-include targetConfigs/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -164,15 +167,15 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 Code.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Code.map" --heap_size=0 --stack_size=512 -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Code_linkInfo.xml" --rom_model -o "Code.out" $(ORDERED_OBJS)
+	"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=TARGET_IS_TM4C123_RB1 --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Code.map" --heap_size=0 --stack_size=512 -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Code_linkInfo.xml" --rom_model -o "Code.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "FreeRTOS\Source\event_groups.obj" "FreeRTOS\Source\list.obj" "FreeRTOS\Source\queue.obj" "FreeRTOS\Source\tasks.obj" "FreeRTOS\Source\timers.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\portasm.obj" "FreeRTOS\Source\portable\MemMang\heap_1.obj" "HAL\Motors\motors.obj" "HAL\Window_Controls\window_control.obj" "MCAL\GPIO\gpio.obj" "MCAL\GPTM\GPTM.obj" "MCAL\UART\uart0.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "FreeRTOS\Source\event_groups.d" "FreeRTOS\Source\list.d" "FreeRTOS\Source\queue.d" "FreeRTOS\Source\tasks.d" "FreeRTOS\Source\timers.d" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.d" "FreeRTOS\Source\portable\MemMang\heap_1.d" "HAL\Motors\motors.d" "HAL\Window_Controls\window_control.d" "MCAL\GPIO\gpio.d" "MCAL\GPTM\GPTM.d" "MCAL\UART\uart0.d" 
+	-$(RM) "main.obj" "FreeRTOS\Source\event_groups.obj" "FreeRTOS\Source\list.obj" "FreeRTOS\Source\queue.obj" "FreeRTOS\Source\tasks.obj" "FreeRTOS\Source\timers.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\portasm.obj" "FreeRTOS\Source\portable\MemMang\heap_1.obj" "HAL\Motors\motors.obj" "HAL\Window_Controls\window_control.obj" "MCAL\GPIO\gpio.obj" "MCAL\GPTM\GPTM.obj" "MCAL\UART\uart0.obj" "targetConfigs\tm4c123gh6pm_startup_ccs.obj" 
+	-$(RM) "main.d" "FreeRTOS\Source\event_groups.d" "FreeRTOS\Source\list.d" "FreeRTOS\Source\queue.d" "FreeRTOS\Source\tasks.d" "FreeRTOS\Source\timers.d" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.d" "FreeRTOS\Source\portable\MemMang\heap_1.d" "HAL\Motors\motors.d" "HAL\Window_Controls\window_control.d" "MCAL\GPIO\gpio.d" "MCAL\GPTM\GPTM.d" "MCAL\UART\uart0.d" "targetConfigs\tm4c123gh6pm_startup_ccs.d" 
 	-$(RM) "FreeRTOS\Source\portable\CCS\ARM_CM4F\portasm.d" 
 	-@echo 'Finished clean'
 	-@echo ' '

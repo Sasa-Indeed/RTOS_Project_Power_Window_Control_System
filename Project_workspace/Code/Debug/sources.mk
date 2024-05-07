@@ -120,4 +120,5 @@ HAL/Window_Controls \
 MCAL/GPIO \
 MCAL/GPTM \
 MCAL/UART \
+targetConfigs \
 

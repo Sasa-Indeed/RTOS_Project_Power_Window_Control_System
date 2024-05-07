@@ -71,6 +71,7 @@ GPIO registers (PORTA)
 #define GPIO_PORTA_IEV_REG        (*((volatile uint32 *)0x4000440C))
 #define GPIO_PORTA_IM_REG         (*((volatile uint32 *)0x40004410))
 #define GPIO_PORTA_RIS_REG        (*((volatile uint32 *)0x40004414))
+#define GPIO_PORTA_MIS_REG        (*((volatile uint32 *)0x40004418))
 #define GPIO_PORTA_ICR_REG        (*((volatile uint32 *)0x4000441C))
 
 /*****************************************************************************
@@ -93,6 +94,7 @@ GPIO registers (PORTB)
 #define GPIO_PORTB_IEV_REG        (*((volatile uint32 *)0x4000540C))
 #define GPIO_PORTB_IM_REG         (*((volatile uint32 *)0x40005410))
 #define GPIO_PORTB_RIS_REG        (*((volatile uint32 *)0x40005414))
+#define GPIO_PORTB_MIS_REG        (*((volatile uint32 *)0x40005418))
 #define GPIO_PORTB_ICR_REG        (*((volatile uint32 *)0x4000541C))
 
 /*****************************************************************************
@@ -115,6 +117,7 @@ GPIO registers (PORTC)
 #define GPIO_PORTC_IEV_REG        (*((volatile uint32 *)0x4000640C))
 #define GPIO_PORTC_IM_REG         (*((volatile uint32 *)0x40006410))
 #define GPIO_PORTC_RIS_REG        (*((volatile uint32 *)0x40006414))
+#define GPIO_PORTC_MIS_REG        (*((volatile uint32 *)0x40006418))
 #define GPIO_PORTC_ICR_REG        (*((volatile uint32 *)0x4000641C))
 
 /*****************************************************************************

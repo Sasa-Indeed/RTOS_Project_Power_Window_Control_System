@@ -12,16 +12,16 @@
 
 
 //MotorA
-#define MOTORA_PORT                               GPIOE
-#define MOTORA_PORT_NUMBER                        PORTE
-#define MOTORA_PIN_CLK_WISE_PIN                       PIN_4     // CLK_WISE  stands for clockwise
-#define MOTORA_PIN_CCLK_WISE_PIN                      PIN_5     // CCLK_WISE stands for counterclockwise
+#define MOTORA_PORT                                    GPIOE
+#define MOTORA_PORT_NUMBER                             PORTE
+#define MOTORA_PIN_CLK_WISE_PIN                        PIN_2     // CLK_WISE  stands for clockwise
+#define MOTORA_PIN_CCLK_WISE_PIN                       PIN_3     // CCLK_WISE stands for counterclockwise
 
 //MotorB
-#define MOTORB_PORT                               GPIOB
-#define MOTORB_PORT_NUMBER                        PORTB
-#define MOTORB_PIN_CLK_WISE_PIN                       PIN_0     // CLK_WISE  stands for clockwise
-#define MOTORB_PIN_CCLK_WISE_PIN                      PIN_1     // CCLK_WISE stands for counterclockwise
+#define MOTORB_PORT                                    GPIOE
+#define MOTORB_PORT_NUMBER                             PORTE
+#define MOTORB_PIN_CLK_WISE_PIN                        PIN_4     // CLK_WISE  stands for clockwise
+#define MOTORB_PIN_CCLK_WISE_PIN                       PIN_1     // CCLK_WISE stands for counterclockwise
 
 void HAL_MotorsInit(void);
 

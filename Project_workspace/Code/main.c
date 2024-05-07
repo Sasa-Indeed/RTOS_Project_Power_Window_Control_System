@@ -2,24 +2,47 @@
 #include <Window_Controls/window_control.h>
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
+#include "semphr.h"
 
 /* MCAL includes. */
 #include "gpio.h"
 #include "motors.h"
+#include "window_control.h"
+
+/* Flag queues */
+QueueHandle_t qLimitUpFlag, qLimitDownFlag, qJamFlag, qLockFlag, qDriverFlag;
+
+/* Semaphores */
+
+/* Passenger semaphore */
+xSemaphoreHandle sPassengerUp, sPassengerDown;
+
+/* Driver semaphore */
+xSemaphoreHandle sDriverUp, sDriverDown;
+
+/* Jam task semaphore */
+xSemaphoreHandle sJam;
 
 /* The HW setup function */
 static void prvSetupHardware( void );
 
 /* FreeRTOS tasks */
-void vPeriodicGreenLedTask(void *pvParameters);
-void vPeriodicRedLedTask(void *pvParameters);
+void vPassengerWindowUpTask(void *pvParameters);
+void vPassengerWindowDownTask(void *pvParameters);
+void vDriverWindowUpTask(void *pvParameters);
+void vDriverWindowDownTask(void *pvParameters);
+void vJamClearingTask(void *pvParameters);
+
 
 /* Testing phase nothing to see*/
 int main(void){
-    uint8 swt = 0;
     /* Setup the hardware for use with the Tiva C board. */
-    prvSetupHardware();
-
+    IntMasterEnable();
+    GPIO_BuiltinButtonsLedsInit();
+    HAL_Limit_Switches_Init();
+    //HAL_Window_Switches_Init();
+    HAL_Jam_Lock_Switches_Init();
      //
     /* Create Tasks here */
     //xTaskCreate(vPeriodicGreenLedTask, "Task 1", 256, NULL, 1, NULL);
@@ -36,10 +59,6 @@ int main(void){
     /* Should never reach here!  If you do then there was not enough heap
     available for the idle task to be created. */
     while(1){
-        read_swt(&swt, DRIVER_WINDOW_DOWN_SWITCH);
-        if (swt == HIGH) {
-            GPIO_BlueLedToggle();
-        }
     }
 
 }
@@ -48,7 +67,6 @@ int main(void){
 static void prvSetupHardware( void ){
     /* Place here any needed HW initialization such as GPIO, UART, etc.  */
    // GPIO_BuiltinButtonsLedsInit();
-    HAL_windowInit();
     GPIO_BuiltinButtonsLedsInit();
 }
 
@@ -70,5 +88,42 @@ void vPeriodicGreenLedTask(void *pvParameters)
     }
 }
 
+void GPIOA_Handler(void){
+    if(GPIO_PORTA_MIS_REG & 0x4){
+        GPIO_BlueLedToggle();
+        GPIO_PORTA_ICR_REG   |= (1<<2);
+    }else if (GPIO_PORTA_MIS_REG & 0x8){
+        GPIO_RedLedToggle();
+        GPIO_PORTA_ICR_REG   |= (1<<3);
+    }
 
+}
+
+void GPIOB_Handler(void){
+    if(GPIO_PORTB_MIS_REG & 0x1){
+        GPIO_BlueLedToggle();
+        GPIO_PORTB_ICR_REG   |= (1<<0);
+    }else if (GPIO_PORTB_MIS_REG & 0x2){
+        GPIO_RedLedToggle();
+        GPIO_PORTB_ICR_REG   |= (1<<1);
+    }
+
+}
+
+void GPIOC_Handler(void){
+    if(GPIO_PORTC_MIS_REG & 0x10){ // Pin4
+        GPIO_BlueLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<4);
+    }else if (GPIO_PORTC_MIS_REG & 0x20){ // Pin5
+        GPIO_RedLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<5);
+    }else if (GPIO_PORTC_MIS_REG & 0x40){ // Pin6
+        GPIO_GreenLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<6);
+    }else if (GPIO_PORTC_MIS_REG & 0x80){ // Pin7
+        GPIO_RedLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<7);
+    }
+
+}
 /*-----------------------------------------------------------*/

@@ -3,6 +3,13 @@
 
 #include "std_types.h"
 #include "tm4c123gh6pm_registers.h"
+#include <stdint.h>
+#include "inc/hw_memmap.h"
+#include <stdbool.h>
+#include "driverlib/gpio.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/systick.h"
+#include "driverlib/interrupt.h"
 
 #define GPIO_PORTF_PRIORITY_MASK      0xFF1FFFFF
 #define GPIO_PORTF_PRIORITY_BITS_POS  21
@@ -12,6 +19,7 @@
 #define RELEASED               ((uint8)0x01)
 
 void GPIO_BuiltinButtonsLedsInit(void);
+void GPIO_LEDInit(void);
 
 void GPIO_RedLedOn(void);
 void GPIO_BlueLedOn(void);
