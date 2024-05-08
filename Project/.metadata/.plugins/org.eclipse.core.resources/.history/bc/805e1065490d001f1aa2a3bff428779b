@@ -1,0 +1,231 @@
+/* Kernel includes. */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+
+/* MCAL includes. */
+#include "gpio.h"
+#include "window_control.h"
+
+
+/* MCAL includes. */
+#include "gpio.h"
+#include "motors.h"
+#include "window_control.h"
+
+/* Macros */
+#define NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND 369
+
+/* Flag queues */
+QueueHandle_t qLimitUpFlag, qLimitDownFlag, qJamFlag, qLockFlag, qDriverFlag;
+
+/* Semaphores */
+
+/* Passenger semaphore */
+xSemaphoreHandle sPassengerUp, sPassengerDown;
+
+/* Driver semaphore */
+xSemaphoreHandle sDriverUp, sDriverDown;
+
+/* Jam task semaphore */
+xSemaphoreHandle sJam;
+
+/* Mutex*/
+xSemaphoreHandle mutex;
+
+/* The HW setup function */
+static void prvSetupHardware( void );
+
+/* Helper functions */
+void Delay_MS(unsigned long long n);
+
+/* FreeRTOS tasks */
+void vPassengerWindowUpTask(void *pvParameters);
+void vPassengerWindowDownTask(void *pvParameters);
+void vDriverWindowUpTask(void *pvParameters);
+void vDriverWindowDownTask(void *pvParameters);
+void vJamClearingTask(void *pvParameters);
+void vInitTask(void *pvParameters);
+
+
+int main(void){
+    /* Setup the hardware for use with the Tiva C board. */
+    prvSetupHardware();
+
+    /* Create Tasks here */
+
+
+    /* Now all the tasks have been started - start the scheduler.
+
+    NOTE : Tasks run in system mode and the scheduler runs in Supervisor mode.
+    The processor MUST be in supervisor mode when vTaskStartScheduler is
+    called.  The demo applications included in the FreeRTOS.org download switch
+    to supervisor mode prior to main being called.  If you are not using one of
+    these demo application projects then ensure Supervisor mode is used here. */
+    //vTaskStartScheduler();
+
+    /* Should never reach here!  If you do then there was not enough heap
+    available for the idle task to be created. */
+    for (;;);
+
+}
+
+void Delay_MS(unsigned long long n){
+    volatile unsigned long long count = 0;
+    while(count++ < (NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND * n) );
+}
+
+
+static void prvSetupHardware( void ){
+    /* Place here any needed HW initialization such as GPIO, UART, etc.  */
+    HAL_Limit_Switches_Init();
+    HAL_Window_Switches_Init();
+    HAL_Jam_Lock_Switches_Init();
+    GPIO_BuiltinButtonsLedsInit();
+    HAL_MotorsInit();
+
+    /* Creating Queues */
+    qLimitUpFlag   = xQueueCreate(1, sizeof(uint32_t));
+    qLimitDownFlag = xQueueCreate(1, sizeof(uint32_t));
+    qJamFlag       = xQueueCreate(1, sizeof(uint32_t));
+    qLockFlag      = xQueueCreate(1, sizeof(uint32_t));
+    qDriverFlag    = xQueueCreate(1, sizeof(uint32_t));
+
+    /* Creating Semaphores */
+    vSemaphoreCreateBinary(sPassengerUp);
+    vSemaphoreCreateBinary(sPassengerDown);
+    vSemaphoreCreateBinary(sDriverUp);
+    vSemaphoreCreateBinary(sDriverDown);
+    vSemaphoreCreateBinary(sJam);
+    mutex = xSemaphoreCreateMutex();
+}
+
+/**********************************************************************************
+ *
+ *                                  Tasks
+ *
+ **********************************************************************************/
+void vInitTask(void *pvParameters){
+    uint8_t initValue = 0;
+    while(1){
+        xQueueSendToBack(qLimitUpFlag, &initValue, 0);
+        xQueueSendToBack(qLimitDownFlag, &initValue, 0);
+        xQueueSendToBack(qJamFlag, &initValue, 0);
+        xQueueSendToBack(qLockFlag, &initValue, 0);
+        xQueueSendToBack(qDriverFlag, &initValue, 0);
+
+        vTaskSuspend(NULL);
+    }
+}
+
+
+void vPassengerWindowUpTask(void *pvParameters){
+    xSemaphoreTake(sPassengerUp, 0);
+    uint8_t upLimit, lockFlag, jamFlag, driverFlag, sendValue = 0;
+
+    while(1){
+        xSemaphoreTake(sPassengerUp, portMAX_DELAY);
+        xSemaphoreTake(mutex, portMAX_DELAY);
+
+        xQueuePeek(qJamFlag, &jamFlag, 0);
+        xQueuePeek(qLockFlag, &lockFlag, 0);
+        xQueuePeek(qLimitUpFlag, &upLimit, 0);
+        xQueuePeek(qDriverFlag, &driverFlag, 0);
+
+
+        if(upLimit || driverFlag || lockFlag){
+            xSemaphoreGive(mutex);
+        }else{
+
+            HAL_TurnOffMotorA();
+            HAL_TurnOnMotorACCLK_WISE(); // Window up
+
+            sendValue = 0;
+            xQueueOverwrite(qLimitDownFlag, &sendValue);
+
+           Delay_MS(500);
+            if(read_SWT(PASSENGER_WINDOW_PORT, PASSENGER_WINDOW_UP_SWITCH_PIN)){ //Manual  mode
+                while(read_SWT(PASSENGER_WINDOW_PORT, PASSENGER_WINDOW_UP_SWITCH_PIN) && !upLimit && !lockFlag && !jamFlag && !driverFlag){
+                    xQueuePeek(qJamFlag, &jamFlag, 0);
+                    xQueuePeek(qLockFlag, &lockFlag, 0);
+                    xQueuePeek(qLimitUpFlag, &upLimit, 0);
+                    xQueuePeek(qDriverFlag, &driverFlag, 0);
+                }
+            }else{ //Automatic mode
+                while(!upLimit && !lockFlag && !jamFlag && !driverFlag){
+                    xQueuePeek(qJamFlag, &jamFlag, 0);
+                    xQueuePeek(qLockFlag, &lockFlag, 0);
+                    xQueuePeek(qLimitUpFlag, &upLimit, 0);
+                    xQueuePeek(qDriverFlag, &driverFlag, 0);
+
+                    //Checking if down button was pressed
+                    sendValue = read_SWT(PASSENGER_WINDOW_PORT, PASSENGER_WINDOW_DOWN_SWITCH_PIN);
+                    if(sendValue){
+                        break;
+                    }
+                }
+            }
+
+            HAL_TurnOffMotorA();
+
+            sendValue = 0;
+            xQueueOverwrite(qJamFlag, &sendValue);
+
+            xSemaphoreGive(mutex);
+        }
+    }
+}
+
+
+/**********************************************************************************
+ *
+ *                                  ISRs
+ *
+ **********************************************************************************/
+
+void GPIOA_Handler(void){
+    if(GPIO_PORTA_MIS_REG & 0x4){
+        GPIO_BlueLedToggle();
+        GPIO_PORTA_ICR_REG   |= (1<<2);
+    }else if (GPIO_PORTA_MIS_REG & 0x8){
+        GPIO_RedLedToggle();
+        GPIO_PORTA_ICR_REG   |= (1<<3);
+    }
+}
+
+void GPIOB_Handler(void){
+    if(GPIO_PORTB_MIS_REG & 0x1){
+        GPIO_BlueLedToggle();
+        GPIO_PORTB_ICR_REG   |= (1<<0);
+    }else if (GPIO_PORTB_MIS_REG & 0x2){
+        GPIO_RedLedToggle();
+        GPIO_PORTB_ICR_REG   |= (1<<1);
+    }
+
+}
+
+void GPIOC_Handler(void){
+
+    uint8_t lockFlag, driverFlag;
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
+    xQueuePeekFromISR(qLockFlag, &lockFlag);
+    xQueuePeekFromISR(qDriverFlag, &driverFlag);
+
+    if(GPIO_PORTC_MIS_REG & 0x10){ // Pin4
+        GPIO_BlueLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<4);
+    }else if (GPIO_PORTC_MIS_REG & 0x20){ // Pin5
+        GPIO_RedLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<5);
+    }else if (GPIO_PORTC_MIS_REG & 0x40){ // Pin6 Passenger Window Up
+        GPIO_BlueLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<6);
+    }else if (GPIO_PORTC_MIS_REG & 0x80){ // Pin7
+        GPIO_RedLedToggle();
+        GPIO_PORTC_ICR_REG   |= (1<<7);
+    }
+
+}
+/*-----------------------------------------------------------*/

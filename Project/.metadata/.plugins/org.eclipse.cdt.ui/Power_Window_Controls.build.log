@@ -1,0 +1,8 @@
+
+**** Build of configuration Debug for project Power_Window_Controls ****
+
+"D:\\ASU\\4-Senior1\\ti\\ccs1270\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+gmake[1]: 'Power_Window_Controls.out' is up to date.
+
+**** Build Finished ****

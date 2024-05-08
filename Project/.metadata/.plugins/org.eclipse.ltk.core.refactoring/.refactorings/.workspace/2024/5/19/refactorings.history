@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;Power_Window_Controls/Motors&apos;" deleteContents="false" description="Delete resource &apos;Power_Window_Controls/Motors&apos;" element1="/Power_Window_Controls/Motors" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1715175817008"/>&#x0A;<refactoring comment="Delete resource &apos;Power_Window_Controls/Window_Controls&apos;" deleteContents="false" description="Delete resource &apos;Power_Window_Controls/Window_Controls&apos;" element1="/Power_Window_Controls/Window_Controls" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1715175821150"/>
+</session>
