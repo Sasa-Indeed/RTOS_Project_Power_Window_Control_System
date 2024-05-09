@@ -187,53 +187,50 @@ void GPIO_BlueLedOn(void)
     GPIO_PORTF_DATA_REG |= (1<<2);  /* Blue LED ON */
 }
 
-void GPIO_GreenLedOn(void)
-{
+void GPIO_GreenLedOn(void){
     GPIO_PORTF_DATA_REG |= (1<<3);  /* Green LED ON */
 }
 
-void GPIO_RedLedOff(void)
-{
+void GPIO_RedLedOff(void){
     GPIO_PORTF_DATA_REG &= ~(1<<1);  /* Red LED OFF */
 }
 
-void GPIO_BlueLedOff(void)
-{
+void GPIO_BlueLedOff(void){
     GPIO_PORTF_DATA_REG &= ~(1<<2);  /* Blue LED OFF */
 }
 
-void GPIO_GreenLedOff(void)
-{
+void GPIO_GreenLedOff(void){
     GPIO_PORTF_DATA_REG &= ~(1<<3);  /* Green LED OFF */
 }
 
-void GPIO_RedLedToggle(void)
-{
+void GPIO_TurnOffAll(void){
+    GPIO_PORTF_DATA_REG &= ~(1<<1);  /* Red LED OFF */
+    GPIO_PORTF_DATA_REG &= ~(1<<2);  /* Blue LED OFF */
+    GPIO_PORTF_DATA_REG &= ~(1<<3);  /* Green LED OFF */
+}
+
+
+void GPIO_RedLedToggle(void){
     GPIO_PORTF_DATA_REG ^= (1<<1);  /* Red LED is toggled */
 }
 
-void GPIO_BlueLedToggle(void)
-{
+void GPIO_BlueLedToggle(void){
     GPIO_PORTF_DATA_REG ^= (1<<2);  /* Blue LED is toggled */
 }
 
-void GPIO_GreenLedToggle(void)
-{
+void GPIO_GreenLedToggle(void){
     GPIO_PORTF_DATA_REG ^= (1<<3);  /* Green LED is toggled */
 }
 
-uint8 GPIO_SW1GetState(void)
-{
+uint8 GPIO_SW1GetState(void){
     return ((GPIO_PORTF_DATA_REG >> 4) & 0x01);
 }
 
-uint8 GPIO_SW2GetState(void)
-{
+uint8 GPIO_SW2GetState(void){
     return ((GPIO_PORTF_DATA_REG >> 0) & 0x01);
 }
 
-void GPIO_SW1EdgeTriggeredInterruptInit(void)
-{
+void GPIO_SW1EdgeTriggeredInterruptInit(void){
     GPIO_PORTF_IS_REG    &= ~(1<<4);      /* PF4 detect edges */
     GPIO_PORTF_IBE_REG   &= ~(1<<4);      /* PF4 will detect a certain edge */
     GPIO_PORTF_IEV_REG   &= ~(1<<4);      /* PF4 will detect a falling edge */
@@ -244,8 +241,7 @@ void GPIO_SW1EdgeTriggeredInterruptInit(void)
     NVIC_EN0_REG         |= 0x40000000;   /* Enable NVIC Interrupt for GPIO PORTF by set bit number 30 in EN0 Register */
 }
 
-void GPIO_SW2EdgeTriggeredInterruptInit(void)
-{
+void GPIO_SW2EdgeTriggeredInterruptInit(void){
     GPIO_PORTF_IS_REG    &= ~(1<<0);      /* PF0 detect edges */
     GPIO_PORTF_IBE_REG   &= ~(1<<0);      /* PF0 will detect a certain edge */
     GPIO_PORTF_IEV_REG   &= ~(1<<0);      /* PF0 will detect a falling edge */

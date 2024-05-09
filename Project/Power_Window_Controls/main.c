@@ -14,11 +14,9 @@
 #include "motors.h"
 #include "window_control.h"
 
-/* Macros */
-#define NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND 369
 
 /* Flag queues */
-QueueHandle_t qLimitUpFlag, qLimitDownFlag, qJamFlag, qLockFlag, qDriverFlag, qPassengerManuelModeFlag;
+QueueHandle_t qLimitUpFlag, qLimitDownFlag, qJamFlag, qLockFlag, qDriverFlag, qDriverModeFlag;
 
 /* Semaphores */
 
@@ -57,6 +55,8 @@ int main(void){
     xTaskCreate(vPassengerWindowUpTask, "Passenger_up_task", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
     xTaskCreate(vPassengerWindowDownTask, "Passenger_down_task", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
     xTaskCreate(vDriverWindowUpTask, "Driver_up_task", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+    xTaskCreate(vDriverWindowDownTask, "Driver_down_task", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+    xTaskCreate(vJamClearingTask, "Jam_clearing_task", configMINIMAL_STACK_SIZE, NULL, 4, NULL);
     xTaskCreate(vInitTask, "Init_task", configMINIMAL_STACK_SIZE, NULL, 4, NULL);
 
 
@@ -76,8 +76,10 @@ int main(void){
 }
 
 void Delay_MS(unsigned long long n){
-    volatile unsigned long long count = 0;
-    while(count++ < (NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND * n) );
+    uint32_t i, j;
+    for (i = 0; i < n; i++){
+        for(j = 0; j < 3180; j++);
+    }
 }
 
 
@@ -88,14 +90,15 @@ static void prvSetupHardware( void ){
     HAL_Jam_Lock_Switches_Init();
     GPIO_BuiltinButtonsLedsInit();
     HAL_MotorsInit();
+    GPIO_SW1EdgeTriggeredInterruptInit();
 
     /* Creating Queues */
-    qLimitUpFlag                = xQueueCreate(1, sizeof(uint32_t));
-    qLimitDownFlag              = xQueueCreate(1, sizeof(uint32_t));
-    qJamFlag                    = xQueueCreate(1, sizeof(uint32_t));
-    qLockFlag                   = xQueueCreate(1, sizeof(uint32_t));
-    qDriverFlag                 = xQueueCreate(1, sizeof(uint32_t));
-    qPassengerManuelModeFlag    = xQueueCreate(1, sizeof(uint32_t));
+    qLimitUpFlag    = xQueueCreate(1, sizeof(uint32_t));
+    qLimitDownFlag  = xQueueCreate(1, sizeof(uint32_t));
+    qJamFlag        = xQueueCreate(1, sizeof(uint32_t));
+    qLockFlag       = xQueueCreate(1, sizeof(uint32_t));
+    qDriverFlag     = xQueueCreate(1, sizeof(uint32_t));
+    qDriverModeFlag = xQueueCreate(1, sizeof(uint32_t));
 
     /* Creating Semaphores */
     vSemaphoreCreateBinary(sPassengerUp);
@@ -104,6 +107,7 @@ static void prvSetupHardware( void ){
     vSemaphoreCreateBinary(sDriverDown);
     vSemaphoreCreateBinary(sJam);
     mutex = xSemaphoreCreateMutex();
+
 }
 
 /**********************************************************************************
@@ -112,14 +116,19 @@ static void prvSetupHardware( void ){
  *
  **********************************************************************************/
 void vInitTask(void *pvParameters){
-    uint8_t initValue = 0;
     while(1){
+        uint8_t initValue = 0;
         xQueueSendToBack(qLimitUpFlag, &initValue, 0);
+        initValue = 0;
         xQueueSendToBack(qLimitDownFlag, &initValue, 0);
+        initValue = 0;
         xQueueSendToBack(qJamFlag, &initValue, 0);
+        initValue = 0;
         xQueueSendToBack(qLockFlag, &initValue, 0);
+        initValue = 0;
         xQueueSendToBack(qDriverFlag, &initValue, 0);
-        xQueueSendToBack(qPassengerManuelModeFlag, &initValue, 0);
+        initValue = 0;
+        xQueueSendToBack(qDriverModeFlag, &initValue, 0);
 
         vTaskSuspend(NULL);
     }
@@ -144,8 +153,11 @@ void vPassengerWindowUpTask(void *pvParameters){
             xSemaphoreGive(mutex);
         }else{
 
-            HAL_TurnOffMotorA();
-            HAL_TurnOnMotorACCLK_WISE(); // Window up
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACCLK_WISE(); // Window up
+            GPIO_TurnOffAll();
+            GPIO_RedLedOn();
+            GPIO_BlueLedOn();
 
             sendValue = 0;
             xQueueOverwrite(qLimitDownFlag, &sendValue);
@@ -158,8 +170,6 @@ void vPassengerWindowUpTask(void *pvParameters){
                     xQueuePeek(qLimitUpFlag, &upLimit, 0);
                     xQueuePeek(qDriverFlag, &driverFlag, 0);
                 }
-                sendValue = 1;
-                xQueueOverwrite(qPassengerManuelModeFlag, &sendValue);
             }else{ //Automatic mode
                 while(!upLimit && !lockFlag && !jamFlag && !driverFlag){
                     xQueuePeek(qJamFlag, &jamFlag, 0);
@@ -175,7 +185,9 @@ void vPassengerWindowUpTask(void *pvParameters){
                 }
             }
 
-            HAL_TurnOffMotorA();
+            //HAL_TurnOffMotorA();
+            GPIO_RedLedOff();
+            GPIO_BlueLedOff();
 
             sendValue = 0;
             xQueueOverwrite(qJamFlag, &sendValue);
@@ -203,8 +215,11 @@ void vPassengerWindowDownTask(void *pvParameters){
             xSemaphoreGive(mutex);
         }else{
 
-            HAL_TurnOffMotorA();
-            HAL_TurnOnMotorACLK_WISE(); // Window down
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACLK_WISE(); // Window down
+            GPIO_TurnOffAll();
+            GPIO_GreenLedOn();
+            GPIO_BlueLedOn();
 
             sendValue = 0;
             xQueueOverwrite(qLimitUpFlag, &sendValue);
@@ -218,7 +233,7 @@ void vPassengerWindowDownTask(void *pvParameters){
                     xQueuePeek(qDriverFlag, &driverFlag, 0);
                 }
                 sendValue = 1;
-                xQueueOverwrite(qPassengerManuelModeFlag, &sendValue);
+
             }else{ //Automatic mode
                 while(!downLimit && !lockFlag && !driverFlag){
                     xQueuePeek(qLockFlag, &lockFlag, 0);
@@ -233,8 +248,9 @@ void vPassengerWindowDownTask(void *pvParameters){
                 }
             }
 
-            HAL_TurnOffMotorA();
-
+            //HAL_TurnOffMotorA();
+            GPIO_GreenLedOff();
+            GPIO_BlueLedOff();
             xSemaphoreGive(mutex);
         }
     }
@@ -254,11 +270,15 @@ void vDriverWindowUpTask(void *pvParameters){
 
 
         if(upLimit){
+            sendValue = 0;
+            xQueueOverwrite(qDriverFlag, &sendValue);
             xSemaphoreGive(mutex);
         }else{
 
-            HAL_TurnOffMotorA();
-            HAL_TurnOnMotorACCLK_WISE(); // Window up
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACCLK_WISE(); // Window up
+            GPIO_TurnOffAll();
+            GPIO_RedLedOn();
 
             sendValue = 0;
             xQueueOverwrite(qLimitDownFlag, &sendValue);
@@ -277,14 +297,14 @@ void vDriverWindowUpTask(void *pvParameters){
                     xQueuePeek(qLimitUpFlag, &upLimit, 0);
 
                     //Checking if down button was pressed
-                    sendValue = read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_DOWN_SWITCH_PIN);
-                    if(sendValue){
+                    if(read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_DOWN_SWITCH_PIN)){
                         break;
                     }
                 }
             }
 
-            HAL_TurnOffMotorA();
+            GPIO_RedLedOff();
+            //HAL_TurnOffMotorA();
 
             sendValue = 0;
             xQueueOverwrite(qJamFlag, &sendValue);
@@ -294,7 +314,77 @@ void vDriverWindowUpTask(void *pvParameters){
         }
     }
 }
-void vDriverWindowDownTask(void *pvParameters);
+
+/* Driver Control of passenger Window down*/
+void vDriverWindowDownTask(void *pvParameters){
+    xSemaphoreTake(sDriverDown, 0);
+    uint8_t downLimit, sendValue = 0;
+
+    while(1){
+        xSemaphoreTake(sDriverDown, portMAX_DELAY);
+        xSemaphoreTake(mutex, portMAX_DELAY);
+
+        xQueuePeek(qLimitDownFlag, &downLimit, 0);
+
+
+
+        if(downLimit){
+            sendValue = 0;
+            xQueueOverwrite(qDriverFlag, &sendValue); //Give off driver Control
+            xSemaphoreGive(mutex);
+        }else{
+
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACLK_WISE(); // Window down
+            GPIO_TurnOffAll();
+            GPIO_GreenLedOn();
+
+            sendValue = 0;
+            xQueueOverwrite(qLimitUpFlag, &sendValue);
+
+           Delay_MS(500);
+
+            if(read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_DOWN_SWITCH_PIN)){ //Manual  mode
+                while(read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_DOWN_SWITCH_PIN) && !downLimit){
+                    xQueuePeek(qLimitDownFlag, &downLimit, 0);
+                }
+
+            }else{ //Automatic mode
+                while(!downLimit){
+                    xQueuePeek(qLimitDownFlag, &downLimit, 0);
+
+                    //Checking if down button was pressed
+                    if(read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_UP_SWITCH_PIN)){
+                        break;
+                    }
+                }
+            }
+
+            //HAL_TurnOffMotorA();
+            GPIO_GreenLedOff();
+            sendValue = 0;
+            xQueueOverwrite(qDriverFlag, &sendValue);
+
+            xSemaphoreGive(mutex);
+        }
+    }
+}
+
+void vJamClearingTask(void *pvParameters){
+    xSemaphoreTake(sJam, 0);
+    uint8_t jamValue = 0;
+    while(1){
+        xSemaphoreTake(sJam, portMAX_DELAY);
+        xSemaphoreTake(mutex, portMAX_DELAY);
+        HAL_TurnOffMotorA();
+        HAL_TurnOnMotorACLK_WISE();
+        Delay_MS(500);
+        HAL_TurnOffMotorA();
+        jamValue = 0;
+        xQueueOverwrite(qJamFlag, &jamValue);
+        xSemaphoreGive(mutex);
+    }
+}
 
 /**********************************************************************************
  *
@@ -318,39 +408,56 @@ void GPIOA_Handler(void){
 }
 
 void GPIOB_Handler(void){
-    if(GPIO_PORTB_MIS_REG & 0x1){
-        GPIO_BlueLedToggle();
+    uint8 jamFlag = 1, lockFlag;
+
+    xQueuePeekFromISR(qLockFlag, &lockFlag);
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
+
+    if(GPIO_PORTB_MIS_REG & 0x1){ // Pin0 Jam Control
+        xQueueOverwriteFromISR(qJamFlag, &jamFlag, &xHigherPriorityTaskWoken);
+        xSemaphoreGiveFromISR(sJam, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
         GPIO_PORTB_ICR_REG   |= (1<<0);
-    }else if (GPIO_PORTB_MIS_REG & 0x2){
-        GPIO_RedLedToggle();
+    }else if (GPIO_PORTB_MIS_REG & 0x2){ // Pin1 Lock Control
+        lockFlag ^= 0x1;
+        xQueueOverwriteFromISR(qLockFlag, &lockFlag, &xHigherPriorityTaskWoken);
         GPIO_PORTB_ICR_REG   |= (1<<1);
     }
 
 }
 
 void GPIOC_Handler(void){
-    uint8_t lockFlag, driverFlag, passengerManuelModeFlag;
+    uint8_t lockFlag, driverFlag, driverInterruptFlag;
     portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
     xQueuePeekFromISR(qLockFlag, &lockFlag);
     xQueuePeekFromISR(qDriverFlag, &driverFlag);
-    xQueuePeekFromISR(qPassengerManuelModeFlag, &passengerManuelModeFlag);
+    xQueuePeekFromISR(qDriverModeFlag, &driverInterruptFlag);
 
     if(GPIO_PORTC_MIS_REG & 0x10){ // Pin4 Driver Controls Passenger Window Up
-        driverFlag = 1;
-        xQueueOverwriteFromISR(qDriverFlag, &driverFlag, &xHigherPriorityTaskWoken);
+        if(!driverInterruptFlag){
+            driverFlag = 1;
+            driverInterruptFlag++;
 
-        xSemaphoreGiveFromISR(sDriverUp, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+            xQueueOverwriteFromISR(qDriverFlag, &driverFlag, &xHigherPriorityTaskWoken);
+            xQueueOverwriteFromISR(qDriverModeFlag, &driverInterruptFlag, &xHigherPriorityTaskWoken);
+            xSemaphoreGiveFromISR(sDriverUp, &xHigherPriorityTaskWoken);
+            portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+
+        }
         GPIO_PORTC_ICR_REG   |= (1<<4);
-    }else if (GPIO_PORTC_MIS_REG & 0x20){ // Pin5
-        GPIO_RedLedToggle();
+    }else if (GPIO_PORTC_MIS_REG & 0x20){ // Pin5 Driver Controls Passenger Window Down
+        if(!driverInterruptFlag){
+            driverFlag = 1;
+            xQueueOverwriteFromISR(qDriverFlag, &driverFlag, &xHigherPriorityTaskWoken);
+            xSemaphoreGiveFromISR(sDriverDown, &xHigherPriorityTaskWoken);
+            portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        }
         GPIO_PORTC_ICR_REG   |= (1<<5);
     }else if (GPIO_PORTC_MIS_REG & 0x40){ // Pin6 Passenger Window Up
 
-        if(lockFlag || driverFlag || passengerManuelModeFlag){
-            passengerManuelModeFlag = 0;
-            xQueueOverwriteFromISR(qPassengerManuelModeFlag, &passengerManuelModeFlag, &xHigherPriorityTaskWoken);
+        if(lockFlag || driverFlag){
             GPIO_PORTC_ICR_REG   |= (1<<6);
         }else{
             xSemaphoreGiveFromISR(sPassengerUp, &xHigherPriorityTaskWoken);
@@ -358,13 +465,21 @@ void GPIOC_Handler(void){
             GPIO_PORTC_ICR_REG   |= (1<<6);
         }
     }else if (GPIO_PORTC_MIS_REG & 0x80){ // Pin7 Passenger Window Down
-        if(!lockFlag || !driverFlag){
+        if(!lockFlag && !driverFlag){
             xSemaphoreGiveFromISR(sPassengerDown, &xHigherPriorityTaskWoken);
             portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
         }
         GPIO_PORTC_ICR_REG   |= (1<<7);
     }
 
+}
+
+void GPIOF_Handler(void){
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    uint8_t  driverInterruptFlag = 0;
+
+    xQueueOverwriteFromISR(qDriverModeFlag, &driverInterruptFlag, &xHigherPriorityTaskWoken);
+    GPIO_PORTF_ICR_REG   |= (1<<4);
 }
 
 /*-----------------------------------------------------------*/

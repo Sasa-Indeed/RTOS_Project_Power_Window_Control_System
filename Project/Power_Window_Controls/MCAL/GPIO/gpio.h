@@ -21,6 +21,7 @@ void GPIO_GreenLedOn(void);
 void GPIO_RedLedOff(void);
 void GPIO_BlueLedOff(void);
 void GPIO_GreenLedOff(void);
+void GPIO_TurnOffAll(void);
 
 void GPIO_RedLedToggle(void);
 void GPIO_BlueLedToggle(void);
