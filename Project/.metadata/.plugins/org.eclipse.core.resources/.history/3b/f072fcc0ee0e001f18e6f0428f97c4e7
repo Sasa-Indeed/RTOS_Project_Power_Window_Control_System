@@ -284,7 +284,8 @@ void vDriverWindowUpTask(void *pvParameters){
             xQueueOverwrite(qLimitDownFlag, &sendValue);
 
             Delay_MS(500);
-            if(read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_UP_SWITCH_PIN)){
+            sendValue = read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_UP_SWITCH_PIN);
+            if(sendValue){
                 //Manual  mode
                 while(read_SWT(DRIVER_WINDOW_PORT, DRIVER_WINDOW_UP_SWITCH_PIN) && !upLimit && !jamFlag){
                     xQueuePeek(qJamFlag, &jamFlag, 0);

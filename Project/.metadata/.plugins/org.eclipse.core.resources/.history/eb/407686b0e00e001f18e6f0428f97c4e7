@@ -16,7 +16,7 @@
 
 
 /* Flag queues */
-volatile QueueHandle_t qLimitUpFlag, qLimitDownFlag, qJamFlag, qLockFlag, qDriverFlag, qDriverModeFlag;
+QueueHandle_t qLimitUpFlag, qLimitDownFlag, qJamFlag, qLockFlag, qDriverFlag, qDriverModeFlag;
 
 /* Semaphores */
 
@@ -93,12 +93,12 @@ static void prvSetupHardware( void ){
     GPIO_SW1EdgeTriggeredInterruptInit();
 
     /* Creating Queues */
-    qLimitUpFlag    = xQueueCreate(1, sizeof(uint8_t));
-    qLimitDownFlag  = xQueueCreate(1, sizeof(uint8_t));
-    qJamFlag        = xQueueCreate(1, sizeof(uint8_t));
-    qLockFlag       = xQueueCreate(1, sizeof(uint8_t));
-    qDriverFlag     = xQueueCreate(1, sizeof(uint8_t));
-    qDriverModeFlag = xQueueCreate(1, sizeof(uint8_t));
+    qLimitUpFlag    = xQueueCreate(1, sizeof(uint32_t));
+    qLimitDownFlag  = xQueueCreate(1, sizeof(uint32_t));
+    qJamFlag        = xQueueCreate(1, sizeof(uint32_t));
+    qLockFlag       = xQueueCreate(1, sizeof(uint32_t));
+    qDriverFlag     = xQueueCreate(1, sizeof(uint32_t));
+    qDriverModeFlag = xQueueCreate(1, sizeof(uint32_t));
 
     /* Creating Semaphores */
     vSemaphoreCreateBinary(sPassengerUp);
@@ -147,7 +147,6 @@ void vPassengerWindowUpTask(void *pvParameters){
         xQueuePeek(qLockFlag, &lockFlag, 0);
         xQueuePeek(qLimitUpFlag, &upLimit, 0);
         xQueuePeek(qDriverFlag, &driverFlag, 0);
-
 
 
         if(upLimit || driverFlag || lockFlag){
@@ -233,6 +232,7 @@ void vPassengerWindowDownTask(void *pvParameters){
                     xQueuePeek(qLimitDownFlag, &downLimit, 0);
                     xQueuePeek(qDriverFlag, &driverFlag, 0);
                 }
+                sendValue = 1;
 
             }else{ //Automatic mode
                 while(!downLimit && !lockFlag && !driverFlag){

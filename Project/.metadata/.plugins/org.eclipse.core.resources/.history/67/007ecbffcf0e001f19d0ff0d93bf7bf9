@@ -184,7 +184,6 @@ GPIO registers (PORTF)
 #define GPIO_PORTF_IEV_REG        (*((volatile uint32 *)0x4002540C))
 #define GPIO_PORTF_IM_REG         (*((volatile uint32 *)0x40025410))
 #define GPIO_PORTF_RIS_REG        (*((volatile uint32 *)0x40025414))
-#define GPIO_PORTF_MIS_REG        (*((volatile uint32 *)0x40025418))
 #define GPIO_PORTF_ICR_REG        (*((volatile uint32 *)0x4002541C))
 
 /*****************************************************************************

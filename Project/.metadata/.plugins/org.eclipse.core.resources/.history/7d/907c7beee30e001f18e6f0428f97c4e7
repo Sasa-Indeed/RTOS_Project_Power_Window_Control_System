@@ -147,7 +147,7 @@ void vPassengerWindowUpTask(void *pvParameters){
         xQueuePeek(qLockFlag, &lockFlag, 0);
         xQueuePeek(qLimitUpFlag, &upLimit, 0);
         xQueuePeek(qDriverFlag, &driverFlag, 0);
-
+        temp =0;
 
 
         if(upLimit || driverFlag || lockFlag){
@@ -174,9 +174,13 @@ void vPassengerWindowUpTask(void *pvParameters){
             }else{ //Automatic mode
                 while(!upLimit && !lockFlag && !jamFlag && !driverFlag){
                     xQueuePeek(qJamFlag, &jamFlag, 0);
+                    temp += jamFlag;
                     xQueuePeek(qLockFlag, &lockFlag, 0);
+                    temp += lockFlag;
                     xQueuePeek(qLimitUpFlag, &upLimit, 0);
+                    temp += upLimit;
                     xQueuePeek(qDriverFlag, &driverFlag, 0);
+                    temp += driverFlag;
 
                     //Checking if down button was pressed
                     sendValue = read_SWT(PASSENGER_WINDOW_PORT, PASSENGER_WINDOW_DOWN_SWITCH_PIN);

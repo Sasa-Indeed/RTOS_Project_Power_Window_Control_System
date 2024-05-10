@@ -147,7 +147,7 @@ void vPassengerWindowUpTask(void *pvParameters){
         xQueuePeek(qLockFlag, &lockFlag, 0);
         xQueuePeek(qLimitUpFlag, &upLimit, 0);
         xQueuePeek(qDriverFlag, &driverFlag, 0);
-
+        temp =0;
 
 
         if(upLimit || driverFlag || lockFlag){
