@@ -1,33 +1,33 @@
 ******************************************************************************
                   TI ARM Linker PC v20.2.7                     
 ******************************************************************************
->> Linked Fri May 10 19:56:54 2024
+>> Linked Sat May 11 11:39:54 2024
 
 OUTPUT FILE NAME:   <Power_Window_Controls.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00004de5
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00004ee1
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  00004e8a  0003b176  R  X
-  SRAM                  20000000   00008000  00001fb8  00006048  RW X
+  FLASH                 00000000   00040000  00004f86  0003b07a  R  X
+  SRAM                  20000000   00008000  00001fbc  00006044  RW X
 
 
 SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    00004e90   00004e90    r-x
+00000000    00000000    00004f88   00004f88    r-x
   00000000    00000000    0000026c   0000026c    r-- .intvecs
-  0000026c    0000026c    00004bda   00004bda    r-x .text
-  00004e48    00004e48    0000000c   0000000c    r-- .const
-  00004e58    00004e58    00000038   00000038    r-- .cinit
-20000000    20000000    00001fb8   00000000    rw-
-  20000000    20000000    00001d70   00000000    rw- .bss
-  20001d70    20001d70    00000200   00000000    rw- .stack
-  20001f70    20001f70    00000048   00000000    rw- .data
+  0000026c    0000026c    00004cd6   00004cd6    r-x .text
+  00004f44    00004f44    0000000c   0000000c    r-- .const
+  00004f50    00004f50    00000038   00000038    r-- .cinit
+20000000    20000000    00001fc0   00000000    rw-
+  20000000    20000000    00001d74   00000000    rw- .bss
+  20001d78    20001d78    00000200   00000000    rw- .stack
+  20001f78    20001f78    00000048   00000000    rw- .data
 
 
 SECTION ALLOCATION MAP
@@ -38,47 +38,47 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    0000026c     
                   00000000    0000026c     tm4c123gh6pm_startup_ccs.obj (.intvecs)
 
-.text      0    0000026c    00004bda     
+.text      0    0000026c    00004cd6     
                   0000026c    0000200c     tasks.obj (.text)
                   00002278    00000f1a     queue.obj (.text)
                   00003192    00000002     --HOLE-- [fill = 0]
-                  00003194    00000c0c     main.obj (.text)
-                  00003da0    00000534     gpio.obj (.text)
-                  000042d4    000002cc     window_control.obj (.text)
-                  000045a0    000002b4     port.obj (.text)
-                  00004854    0000012a     list.obj (.text)
-                  0000497e    00000002     --HOLE-- [fill = 0]
-                  00004980    000000f4     motors.obj (.text)
-                  00004a74    000000da     portasm.obj (.text)
-                  00004b4e    00000002     --HOLE-- [fill = 0]
-                  00004b50    000000d0     heap_1.obj (.text)
-                  00004c20    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.asm.obj (.text)
-                  00004cbc    0000007a                                   : memset_t2.asm.obj (.text)
-                  00004d36    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  00004d9e    00000002     --HOLE-- [fill = 0]
-                  00004da0    00000044                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
-                  00004de4    00000034                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
-                  00004e18    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  00004e26    0000000c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
-                  00004e32    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
-                  00004e3e    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
-                  00004e42    00000004                                   : exit.c.obj (.text:abort:abort)
+                  00003194    00000d08     main.obj (.text)
+                  00003e9c    00000534     gpio.obj (.text)
+                  000043d0    000002cc     window_control.obj (.text)
+                  0000469c    000002b4     port.obj (.text)
+                  00004950    0000012a     list.obj (.text)
+                  00004a7a    00000002     --HOLE-- [fill = 0]
+                  00004a7c    000000f4     motors.obj (.text)
+                  00004b70    000000da     portasm.obj (.text)
+                  00004c4a    00000002     --HOLE-- [fill = 0]
+                  00004c4c    000000d0     heap_1.obj (.text)
+                  00004d1c    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.asm.obj (.text)
+                  00004db8    0000007a                                   : memset_t2.asm.obj (.text)
+                  00004e32    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  00004e9a    00000002     --HOLE-- [fill = 0]
+                  00004e9c    00000044                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  00004ee0    00000034                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
+                  00004f14    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  00004f22    0000000c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
+                  00004f2e    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
+                  00004f3a    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  00004f3e    00000004                                   : exit.c.obj (.text:abort:abort)
 
-.const     0    00004e48    0000000c     
-                  00004e48    00000008     port.obj (.const)
-                  00004e50    00000004     tasks.obj (.const)
+.const     0    00004f44    0000000c     
+                  00004f44    00000008     port.obj (.const)
+                  00004f4c    00000004     tasks.obj (.const)
 
-.cinit     0    00004e58    00000038     
-                  00004e58    00000012     (.cinit..data.load) [load image, compression = lzss]
-                  00004e6a    00000002     --HOLE-- [fill = 0]
-                  00004e6c    0000000c     (__TI_handler_table)
-                  00004e78    00000008     (.cinit..bss.load) [load image, compression = zero_init]
-                  00004e80    00000010     (__TI_cinit_table)
+.cinit     0    00004f50    00000038     
+                  00004f50    00000012     (.cinit..data.load) [load image, compression = lzss]
+                  00004f62    00000002     --HOLE-- [fill = 0]
+                  00004f64    0000000c     (__TI_handler_table)
+                  00004f70    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00004f78    00000010     (__TI_cinit_table)
 
 .init_array 
 *          0    00000000    00000000     UNINITIALIZED
 
-.bss       0    20000000    00001d70     UNINITIALIZED
+.bss       0    20000000    00001d74     UNINITIALIZED
                   20000000    00001c70     heap_1.obj (.bss:ucHeap)
                   20001c70    00000064     tasks.obj (.bss:pxReadyTasksLists)
                   20001cd4    00000014     tasks.obj (.bss:xDelayedTaskList1)
@@ -94,20 +94,21 @@ section   page    origin      length       input sections
                   20001d50    00000004     (.common:qLimitDownFlag)
                   20001d54    00000004     (.common:qLimitUpFlag)
                   20001d58    00000004     (.common:qLockFlag)
-                  20001d5c    00000004     (.common:sDriverDown)
-                  20001d60    00000004     (.common:sDriverUp)
-                  20001d64    00000004     (.common:sJam)
-                  20001d68    00000004     (.common:sPassengerDown)
-                  20001d6c    00000004     (.common:sPassengerUp)
+                  20001d5c    00000004     (.common:qPassengerModeFlag)
+                  20001d60    00000004     (.common:sDriverDown)
+                  20001d64    00000004     (.common:sDriverUp)
+                  20001d68    00000004     (.common:sJam)
+                  20001d6c    00000004     (.common:sPassengerDown)
+                  20001d70    00000004     (.common:sPassengerUp)
 
-.data      0    20001f70    00000048     UNINITIALIZED
-                  20001f70    00000034     tasks.obj (.data)
-                  20001fa4    0000000c     port.obj (.data)
-                  20001fb0    00000008     heap_1.obj (.data)
+.data      0    20001f78    00000048     UNINITIALIZED
+                  20001f78    00000034     tasks.obj (.data)
+                  20001fac    0000000c     port.obj (.data)
+                  20001fb8    00000008     heap_1.obj (.data)
 
-.stack     0    20001d70    00000200     UNINITIALIZED
-                  20001d70    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.stack)
-                  20001d74    000001fc     --HOLE--
+.stack     0    20001d78    00000200     UNINITIALIZED
+                  20001d78    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.stack)
+                  20001d7c    000001fc     --HOLE--
 
 __llvm_prf_cnts 
 *          0    20000000    00000000     UNINITIALIZED
@@ -117,10 +118,10 @@ MODULE SUMMARY
        Module                         code    ro data   rw data
        ------                         ----    -------   -------
     .\
-       main.obj                       3084    0         48     
+       main.obj                       3336    0         52     
        tm4c123gh6pm_startup_ccs.obj   12      620       0      
     +--+------------------------------+-------+---------+---------+
-       Total:                         3096    620       48     
+       Total:                         3348    620       52     
                                                                
     .\FreeRTOS\Source\
        tasks.obj                      8204    4         260    
@@ -171,19 +172,19 @@ MODULE SUMMARY
        Stack:                         0       0         512    
        Linker Generated:              0       54        0      
     +--+------------------------------+-------+---------+---------+
-       Grand Total:                   19410   686       8120   
+       Grand Total:                   19662   686       8124   
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00004e80 records: 2, size/record: 8, table size: 16
-	.data: load addr=00004e58, load size=00000012 bytes, run addr=20001f70, run size=00000048 bytes, compression=lzss
-	.bss: load addr=00004e78, load size=00000008 bytes, run addr=20000000, run size=00001d70 bytes, compression=zero_init
+__TI_cinit_table @ 00004f78 records: 2, size/record: 8, table size: 16
+	.data: load addr=00004f50, load size=00000012 bytes, run addr=20001f78, run size=00000048 bytes, compression=lzss
+	.bss: load addr=00004f70, load size=00000008 bytes, run addr=20000000, run size=00001d74 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00004e6c records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 00004f64 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_decompress_lzss
 	index: 1, handler: __TI_decompress_none
 	index: 2, handler: __TI_zero_init
@@ -193,133 +194,134 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 
 address   name                               
 -------   ----                               
-00004e43  C$$EXIT                            
+00004f3f  C$$EXIT                            
 00003219  Delay_MS                           
-00003ac1  GPIOA_Handler                      
-00003b3d  GPIOB_Handler                      
-00003bd5  GPIOC_Handler                      
-00003d37  GPIOF_Handler                      
-0000417d  GPIO_BlueLedOff                    
-00004159  GPIO_BlueLedOn                     
-000041c1  GPIO_BlueLedToggle                 
-000040d9  GPIO_BuiltinButtonsLedsInit        
-00004189  GPIO_GreenLedOff                   
-00004165  GPIO_GreenLedOn                    
-000041cd  GPIO_GreenLedToggle                
-00004171  GPIO_RedLedOff                     
-0000414d  GPIO_RedLedOn                      
-000041b5  GPIO_RedLedToggle                  
-000041ed  GPIO_SW1EdgeTriggeredInterruptInit 
-000041d9  GPIO_SW1GetState                   
-0000423b  GPIO_SW2EdgeTriggeredInterruptInit 
-000041e3  GPIO_SW2GetState                   
-00004195  GPIO_TurnOffAll                    
-00004415  HAL_Jam_Lock_Switches_Init         
-00004391  HAL_Limit_Switches_Init            
-00004981  HAL_MotorsInit                     
-00004a11  HAL_TurnOffMotorA                  
-00004a59  HAL_TurnOffMotorB                  
-000049f9  HAL_TurnOnMotorACCLK_WISE          
-000049e1  HAL_TurnOnMotorACLK_WISE           
-00004a41  HAL_TurnOnMotorBCCLK_WISE          
-00004a29  HAL_TurnOnMotorBCLK_WISE           
-00004499  HAL_Window_Switches_Init           
-00003da1  MCAL_GPIO_Init                     
-00003dc5  MCAL_GPIO_Pin_Init                 
-000040b1  MCAL_GPIO_ReadPin                  
-00004087  MCAL_GPIO_TogglePin                
-00004033  MCAL_GPIO_WritePin                 
-0000406f  MCAL_GPIO_WritePort                
-00004e33  ResetISR                           
-20001f70  __STACK_END                        
+00003b25  GPIOA_Handler                      
+00003ba1  GPIOB_Handler                      
+00003c41  GPIOC_Handler                      
+00003e0d  GPIOF_Handler                      
+00004279  GPIO_BlueLedOff                    
+00004255  GPIO_BlueLedOn                     
+000042bd  GPIO_BlueLedToggle                 
+000041d5  GPIO_BuiltinButtonsLedsInit        
+00004285  GPIO_GreenLedOff                   
+00004261  GPIO_GreenLedOn                    
+000042c9  GPIO_GreenLedToggle                
+0000426d  GPIO_RedLedOff                     
+00004249  GPIO_RedLedOn                      
+000042b1  GPIO_RedLedToggle                  
+000042e9  GPIO_SW1EdgeTriggeredInterruptInit 
+000042d5  GPIO_SW1GetState                   
+00004337  GPIO_SW2EdgeTriggeredInterruptInit 
+000042df  GPIO_SW2GetState                   
+00004291  GPIO_TurnOffAll                    
+00004511  HAL_Jam_Lock_Switches_Init         
+0000448d  HAL_Limit_Switches_Init            
+00004a7d  HAL_MotorsInit                     
+00004b0d  HAL_TurnOffMotorA                  
+00004b55  HAL_TurnOffMotorB                  
+00004af5  HAL_TurnOnMotorACCLK_WISE          
+00004add  HAL_TurnOnMotorACLK_WISE           
+00004b3d  HAL_TurnOnMotorBCCLK_WISE          
+00004b25  HAL_TurnOnMotorBCLK_WISE           
+00004595  HAL_Window_Switches_Init           
+00003e9d  MCAL_GPIO_Init                     
+00003ec1  MCAL_GPIO_Pin_Init                 
+000041ad  MCAL_GPIO_ReadPin                  
+00004183  MCAL_GPIO_TogglePin                
+0000412f  MCAL_GPIO_WritePin                 
+0000416b  MCAL_GPIO_WritePort                
+00004f2f  ResetISR                           
+20001f78  __STACK_END                        
 00000200  __STACK_SIZE                       
-20001f70  __STACK_TOP                        
-00004e80  __TI_CINIT_Base                    
-00004e90  __TI_CINIT_Limit                   
-00004e6c  __TI_Handler_Table_Base            
-00004e78  __TI_Handler_Table_Limit           
-00004da1  __TI_auto_init_nobinit_nopinit     
-00004d37  __TI_decompress_lzss               
-00004e19  __TI_decompress_none               
+20001f78  __STACK_TOP                        
+00004f78  __TI_CINIT_Base                    
+00004f88  __TI_CINIT_Limit                   
+00004f64  __TI_Handler_Table_Base            
+00004f70  __TI_Handler_Table_Limit           
+00004e9d  __TI_auto_init_nobinit_nopinit     
+00004e33  __TI_decompress_lzss               
+00004f15  __TI_decompress_none               
 ffffffff  __TI_pprof_out_hndl                
 ffffffff  __TI_prof_data_size                
 ffffffff  __TI_prof_data_start               
 00000000  __TI_static_base__                 
-00004e27  __TI_zero_init                     
-00004cbd  __aeabi_memclr                     
-00004cbd  __aeabi_memclr4                    
-00004cbd  __aeabi_memclr8                    
-00004c21  __aeabi_memcpy                     
-00004c21  __aeabi_memcpy4                    
-00004c21  __aeabi_memcpy8                    
-00004cbf  __aeabi_memset                     
-00004cbf  __aeabi_memset4                    
-00004cbf  __aeabi_memset8                    
+00004f23  __TI_zero_init                     
+00004db9  __aeabi_memclr                     
+00004db9  __aeabi_memclr4                    
+00004db9  __aeabi_memclr8                    
+00004d1d  __aeabi_memcpy                     
+00004d1d  __aeabi_memcpy4                    
+00004d1d  __aeabi_memcpy8                    
+00004dbb  __aeabi_memset                     
+00004dbb  __aeabi_memset4                    
+00004dbb  __aeabi_memset8                    
 ffffffff  __binit__                          
 ffffffff  __c_args__                         
 UNDEFED   __mpu_init                         
-20001d70  __stack                            
+20001d78  __stack                            
 20000000  __start___llvm_prf_cnts            
 20000000  __stop___llvm_prf_cnts             
-00004de5  _c_int00_noargs                    
+00004ee1  _c_int00_noargs                    
 UNDEFED   _system_post_cinit                 
-00004e3f  _system_pre_init                   
-00004e43  abort                              
+00004f3b  _system_pre_init                   
+00004f3f  abort                              
 ffffffff  binit                              
 00000000  g_pfnVectors                       
 00003195  main                               
-00004c21  memcpy                             
-00004cc5  memset                             
+00004d1d  memcpy                             
+00004dc1  memset                             
 20001d40  mutex                              
 00000c97  pcTaskGetName                      
-00004b51  pvPortMalloc                       
+00004c4d  pvPortMalloc                       
 0000191f  pvTaskIncrementMutexHeldCount      
-20001f70  pxCurrentTCB                       
-000045a1  pxPortInitialiseStack              
+20001f78  pxCurrentTCB                       
+0000469d  pxPortInitialiseStack              
 20001d44  qDriverFlag                        
 20001d48  qDriverModeFlag                    
 20001d4c  qJamFlag                           
 20001d50  qLimitDownFlag                     
 20001d54  qLimitUpFlag                       
 20001d58  qLockFlag                          
-00004363  read_SWT                           
-000042d5  read_swt                           
-20001d5c  sDriverDown                        
-20001d60  sDriverUp                          
-20001d64  sJam                               
-20001d68  sPassengerDown                     
-20001d6c  sPassengerUp                       
-00004e48  ulMaxSyscallInterruptPriority      
-00004a85  ulPortGetIPSR                      
+20001d5c  qPassengerModeFlag                 
+0000445f  read_SWT                           
+000043d1  read_swt                           
+20001d60  sDriverDown                        
+20001d64  sDriverUp                          
+20001d68  sJam                               
+20001d6c  sPassengerDown                     
+20001d70  sPassengerUp                       
+00004f44  ulMaxSyscallInterruptPriority      
+00004b81  ulPortGetIPSR                      
 00001937  ulTaskGenericNotifyTake            
 00002139  ulTaskGenericNotifyValueClear      
-00004937  uxListRemove                       
+00004a33  uxListRemove                       
 00002e69  uxQueueMessagesWaiting             
 00002ec7  uxQueueMessagesWaitingFromISR      
 00002e93  uxQueueSpacesAvailable             
 00000c91  uxTaskGetNumberOfTasks             
 000018fd  uxTaskResetEventItemValue          
-00004e50  uxTopUsedPriority                  
-0000394d  vDriverWindowDownTask              
-000037e9  vDriverWindowUpTask                
-00003391  vInitTask                          
-00003a55  vJamClearingTask                   
-00004855  vListInitialise                    
-00004885  vListInitialiseItem                
-000048d1  vListInsert                        
-00004895  vListInsertEnd                     
-00003675  vPassengerWindowDownTask           
-000034a5  vPassengerWindowUpTask             
-00004b41  vPortEnableVFP                     
-000046e5  vPortEndScheduler                  
-00004709  vPortEnterCritical                 
-0000474b  vPortExitCritical                  
-00004bdd  vPortFree                          
-00004c01  vPortInitialiseBlocks              
-00004afd  vPortSVCHandler                    
-0000479d  vPortSetupTimerInterrupt           
-00004b1d  vPortStartFirstTask                
-000047b7  vPortValidateInterruptPriority     
+00004f4c  uxTopUsedPriority                  
+00003999  vDriverWindowDownTask              
+0000382d  vDriverWindowUpTask                
+000033a3  vInitTask                          
+00003aaf  vJamClearingTask                   
+00004951  vListInitialise                    
+00004981  vListInitialiseItem                
+000049cd  vListInsert                        
+00004991  vListInsertEnd                     
+000036b5  vPassengerWindowDownTask           
+000034d5  vPassengerWindowUpTask             
+00004c3d  vPortEnableVFP                     
+000047e1  vPortEndScheduler                  
+00004805  vPortEnterCritical                 
+00004847  vPortExitCritical                  
+00004cd9  vPortFree                          
+00004cfd  vPortInitialiseBlocks              
+00004bf9  vPortSVCHandler                    
+00004899  vPortSetupTimerInterrupt           
+00004c19  vPortStartFirstTask                
+000048b3  vPortValidateInterruptPriority     
 00002ef1  vQueueDelete                       
 00000685  vTaskDelay                         
 000004bf  vTaskDelete                        
@@ -337,10 +339,10 @@ ffffffff  binit
 000006e9  vTaskSuspend                       
 00000aaf  vTaskSuspendAll                    
 00000f23  vTaskSwitchContext                 
-00004c09  xPortGetFreeHeapSize               
-00004a9d  xPortPendSVHandler                 
-0000462d  xPortStartScheduler                
-00004777  xPortSysTickHandler                
+00004d05  xPortGetFreeHeapSize               
+00004b99  xPortPendSVHandler                 
+00004729  xPortStartScheduler                
+00004873  xPortSysTickHandler                
 0000245f  xQueueCreateMutex                  
 00002379  xQueueGenericCreate                
 00002279  xQueueGenericReset                 
@@ -438,97 +440,97 @@ address   name
 00003159  xQueueIsQueueFullFromISR           
 00003195  main                               
 00003219  Delay_MS                           
-00003391  vInitTask                          
-000034a5  vPassengerWindowUpTask             
-00003675  vPassengerWindowDownTask           
-000037e9  vDriverWindowUpTask                
-0000394d  vDriverWindowDownTask              
-00003a55  vJamClearingTask                   
-00003ac1  GPIOA_Handler                      
-00003b3d  GPIOB_Handler                      
-00003bd5  GPIOC_Handler                      
-00003d37  GPIOF_Handler                      
-00003da1  MCAL_GPIO_Init                     
-00003dc5  MCAL_GPIO_Pin_Init                 
-00004033  MCAL_GPIO_WritePin                 
-0000406f  MCAL_GPIO_WritePort                
-00004087  MCAL_GPIO_TogglePin                
-000040b1  MCAL_GPIO_ReadPin                  
-000040d9  GPIO_BuiltinButtonsLedsInit        
-0000414d  GPIO_RedLedOn                      
-00004159  GPIO_BlueLedOn                     
-00004165  GPIO_GreenLedOn                    
-00004171  GPIO_RedLedOff                     
-0000417d  GPIO_BlueLedOff                    
-00004189  GPIO_GreenLedOff                   
-00004195  GPIO_TurnOffAll                    
-000041b5  GPIO_RedLedToggle                  
-000041c1  GPIO_BlueLedToggle                 
-000041cd  GPIO_GreenLedToggle                
-000041d9  GPIO_SW1GetState                   
-000041e3  GPIO_SW2GetState                   
-000041ed  GPIO_SW1EdgeTriggeredInterruptInit 
-0000423b  GPIO_SW2EdgeTriggeredInterruptInit 
-000042d5  read_swt                           
-00004363  read_SWT                           
-00004391  HAL_Limit_Switches_Init            
-00004415  HAL_Jam_Lock_Switches_Init         
-00004499  HAL_Window_Switches_Init           
-000045a1  pxPortInitialiseStack              
-0000462d  xPortStartScheduler                
-000046e5  vPortEndScheduler                  
-00004709  vPortEnterCritical                 
-0000474b  vPortExitCritical                  
-00004777  xPortSysTickHandler                
-0000479d  vPortSetupTimerInterrupt           
-000047b7  vPortValidateInterruptPriority     
-00004855  vListInitialise                    
-00004885  vListInitialiseItem                
-00004895  vListInsertEnd                     
-000048d1  vListInsert                        
-00004937  uxListRemove                       
-00004981  HAL_MotorsInit                     
-000049e1  HAL_TurnOnMotorACLK_WISE           
-000049f9  HAL_TurnOnMotorACCLK_WISE          
-00004a11  HAL_TurnOffMotorA                  
-00004a29  HAL_TurnOnMotorBCLK_WISE           
-00004a41  HAL_TurnOnMotorBCCLK_WISE          
-00004a59  HAL_TurnOffMotorB                  
-00004a85  ulPortGetIPSR                      
-00004a9d  xPortPendSVHandler                 
-00004afd  vPortSVCHandler                    
-00004b1d  vPortStartFirstTask                
-00004b41  vPortEnableVFP                     
-00004b51  pvPortMalloc                       
-00004bdd  vPortFree                          
-00004c01  vPortInitialiseBlocks              
-00004c09  xPortGetFreeHeapSize               
-00004c21  __aeabi_memcpy                     
-00004c21  __aeabi_memcpy4                    
-00004c21  __aeabi_memcpy8                    
-00004c21  memcpy                             
-00004cbd  __aeabi_memclr                     
-00004cbd  __aeabi_memclr4                    
-00004cbd  __aeabi_memclr8                    
-00004cbf  __aeabi_memset                     
-00004cbf  __aeabi_memset4                    
-00004cbf  __aeabi_memset8                    
-00004cc5  memset                             
-00004d37  __TI_decompress_lzss               
-00004da1  __TI_auto_init_nobinit_nopinit     
-00004de5  _c_int00_noargs                    
-00004e19  __TI_decompress_none               
-00004e27  __TI_zero_init                     
-00004e33  ResetISR                           
-00004e3f  _system_pre_init                   
-00004e43  C$$EXIT                            
-00004e43  abort                              
-00004e48  ulMaxSyscallInterruptPriority      
-00004e50  uxTopUsedPriority                  
-00004e6c  __TI_Handler_Table_Base            
-00004e78  __TI_Handler_Table_Limit           
-00004e80  __TI_CINIT_Base                    
-00004e90  __TI_CINIT_Limit                   
+000033a3  vInitTask                          
+000034d5  vPassengerWindowUpTask             
+000036b5  vPassengerWindowDownTask           
+0000382d  vDriverWindowUpTask                
+00003999  vDriverWindowDownTask              
+00003aaf  vJamClearingTask                   
+00003b25  GPIOA_Handler                      
+00003ba1  GPIOB_Handler                      
+00003c41  GPIOC_Handler                      
+00003e0d  GPIOF_Handler                      
+00003e9d  MCAL_GPIO_Init                     
+00003ec1  MCAL_GPIO_Pin_Init                 
+0000412f  MCAL_GPIO_WritePin                 
+0000416b  MCAL_GPIO_WritePort                
+00004183  MCAL_GPIO_TogglePin                
+000041ad  MCAL_GPIO_ReadPin                  
+000041d5  GPIO_BuiltinButtonsLedsInit        
+00004249  GPIO_RedLedOn                      
+00004255  GPIO_BlueLedOn                     
+00004261  GPIO_GreenLedOn                    
+0000426d  GPIO_RedLedOff                     
+00004279  GPIO_BlueLedOff                    
+00004285  GPIO_GreenLedOff                   
+00004291  GPIO_TurnOffAll                    
+000042b1  GPIO_RedLedToggle                  
+000042bd  GPIO_BlueLedToggle                 
+000042c9  GPIO_GreenLedToggle                
+000042d5  GPIO_SW1GetState                   
+000042df  GPIO_SW2GetState                   
+000042e9  GPIO_SW1EdgeTriggeredInterruptInit 
+00004337  GPIO_SW2EdgeTriggeredInterruptInit 
+000043d1  read_swt                           
+0000445f  read_SWT                           
+0000448d  HAL_Limit_Switches_Init            
+00004511  HAL_Jam_Lock_Switches_Init         
+00004595  HAL_Window_Switches_Init           
+0000469d  pxPortInitialiseStack              
+00004729  xPortStartScheduler                
+000047e1  vPortEndScheduler                  
+00004805  vPortEnterCritical                 
+00004847  vPortExitCritical                  
+00004873  xPortSysTickHandler                
+00004899  vPortSetupTimerInterrupt           
+000048b3  vPortValidateInterruptPriority     
+00004951  vListInitialise                    
+00004981  vListInitialiseItem                
+00004991  vListInsertEnd                     
+000049cd  vListInsert                        
+00004a33  uxListRemove                       
+00004a7d  HAL_MotorsInit                     
+00004add  HAL_TurnOnMotorACLK_WISE           
+00004af5  HAL_TurnOnMotorACCLK_WISE          
+00004b0d  HAL_TurnOffMotorA                  
+00004b25  HAL_TurnOnMotorBCLK_WISE           
+00004b3d  HAL_TurnOnMotorBCCLK_WISE          
+00004b55  HAL_TurnOffMotorB                  
+00004b81  ulPortGetIPSR                      
+00004b99  xPortPendSVHandler                 
+00004bf9  vPortSVCHandler                    
+00004c19  vPortStartFirstTask                
+00004c3d  vPortEnableVFP                     
+00004c4d  pvPortMalloc                       
+00004cd9  vPortFree                          
+00004cfd  vPortInitialiseBlocks              
+00004d05  xPortGetFreeHeapSize               
+00004d1d  __aeabi_memcpy                     
+00004d1d  __aeabi_memcpy4                    
+00004d1d  __aeabi_memcpy8                    
+00004d1d  memcpy                             
+00004db9  __aeabi_memclr                     
+00004db9  __aeabi_memclr4                    
+00004db9  __aeabi_memclr8                    
+00004dbb  __aeabi_memset                     
+00004dbb  __aeabi_memset4                    
+00004dbb  __aeabi_memset8                    
+00004dc1  memset                             
+00004e33  __TI_decompress_lzss               
+00004e9d  __TI_auto_init_nobinit_nopinit     
+00004ee1  _c_int00_noargs                    
+00004f15  __TI_decompress_none               
+00004f23  __TI_zero_init                     
+00004f2f  ResetISR                           
+00004f3b  _system_pre_init                   
+00004f3f  C$$EXIT                            
+00004f3f  abort                              
+00004f44  ulMaxSyscallInterruptPriority      
+00004f4c  uxTopUsedPriority                  
+00004f64  __TI_Handler_Table_Base            
+00004f70  __TI_Handler_Table_Limit           
+00004f78  __TI_CINIT_Base                    
+00004f88  __TI_CINIT_Limit                   
 20000000  __start___llvm_prf_cnts            
 20000000  __stop___llvm_prf_cnts             
 20001d40  mutex                              
@@ -538,15 +540,16 @@ address   name
 20001d50  qLimitDownFlag                     
 20001d54  qLimitUpFlag                       
 20001d58  qLockFlag                          
-20001d5c  sDriverDown                        
-20001d60  sDriverUp                          
-20001d64  sJam                               
-20001d68  sPassengerDown                     
-20001d6c  sPassengerUp                       
-20001d70  __stack                            
-20001f70  __STACK_END                        
-20001f70  __STACK_TOP                        
-20001f70  pxCurrentTCB                       
+20001d5c  qPassengerModeFlag                 
+20001d60  sDriverDown                        
+20001d64  sDriverUp                          
+20001d68  sJam                               
+20001d6c  sPassengerDown                     
+20001d70  sPassengerUp                       
+20001d78  __stack                            
+20001f78  __STACK_END                        
+20001f78  __STACK_TOP                        
+20001f78  pxCurrentTCB                       
 ffffffff  __TI_pprof_out_hndl                
 ffffffff  __TI_prof_data_size                
 ffffffff  __TI_prof_data_start               
@@ -556,4 +559,4 @@ ffffffff  binit
 UNDEFED   __mpu_init                         
 UNDEFED   _system_post_cinit                 
 
-[178 symbols]
+[179 symbols]

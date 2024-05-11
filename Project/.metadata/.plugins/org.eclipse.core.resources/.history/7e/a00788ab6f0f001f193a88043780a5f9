@@ -159,8 +159,8 @@ void vPassengerWindowUpTask(void *pvParameters){
             xSemaphoreGive(mutex);
         }else{
 
-            HAL_TurnOffMotorA();
-            HAL_TurnOnMotorACCLK_WISE(); // Window up
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACCLK_WISE(); // Window up
             GPIO_TurnOffAll();
             GPIO_RedLedOn();
             GPIO_BlueLedOn();
@@ -191,7 +191,7 @@ void vPassengerWindowUpTask(void *pvParameters){
                 }
             }
 
-            HAL_TurnOffMotorA();
+            //HAL_TurnOffMotorA();
             GPIO_RedLedOff();
             GPIO_BlueLedOff();
 
@@ -221,8 +221,8 @@ void vPassengerWindowDownTask(void *pvParameters){
             xSemaphoreGive(mutex);
         }else{
 
-            HAL_TurnOffMotorA();
-            HAL_TurnOnMotorACLK_WISE(); // Window down
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACLK_WISE(); // Window down
             GPIO_TurnOffAll();
             GPIO_GreenLedOn();
             GPIO_BlueLedOn();
@@ -253,7 +253,7 @@ void vPassengerWindowDownTask(void *pvParameters){
                 }
             }
 
-            HAL_TurnOffMotorA();
+            //HAL_TurnOffMotorA();
             GPIO_GreenLedOff();
             GPIO_BlueLedOff();
             xSemaphoreGive(mutex);
@@ -280,8 +280,8 @@ void vDriverWindowUpTask(void *pvParameters){
             xSemaphoreGive(mutex);
         }else{
 
-            HAL_TurnOffMotorA();
-            HAL_TurnOnMotorACCLK_WISE(); // Window up
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACCLK_WISE(); // Window up
             GPIO_TurnOffAll();
             GPIO_RedLedOn();
 
@@ -309,7 +309,7 @@ void vDriverWindowUpTask(void *pvParameters){
             }
 
             GPIO_RedLedOff();
-            HAL_TurnOffMotorA();
+            //HAL_TurnOffMotorA();
 
             sendValue = 0;
             xQueueOverwrite(qJamFlag, &sendValue);
@@ -339,8 +339,8 @@ void vDriverWindowDownTask(void *pvParameters){
             xSemaphoreGive(mutex);
         }else{
 
-            HAL_TurnOffMotorA();
-            HAL_TurnOnMotorACLK_WISE(); // Window down
+            //HAL_TurnOffMotorA();
+            //HAL_TurnOnMotorACLK_WISE(); // Window down
             GPIO_TurnOffAll();
             GPIO_GreenLedOn();
 
@@ -365,7 +365,7 @@ void vDriverWindowDownTask(void *pvParameters){
                 }
             }
 
-            HAL_TurnOffMotorA();
+            //HAL_TurnOffMotorA();
             GPIO_GreenLedOff();
             sendValue = 0;
             xQueueOverwrite(qDriverFlag, &sendValue);
@@ -381,12 +381,12 @@ void vJamClearingTask(void *pvParameters){
     while(1){
         xSemaphoreTake(sJam, portMAX_DELAY);
         xSemaphoreTake(mutex, portMAX_DELAY);
-        HAL_TurnOffMotorA();
-        HAL_TurnOnMotorACLK_WISE();
+        //HAL_TurnOffMotorA();
+        //HAL_TurnOnMotorACLK_WISE();
         GPIO_TurnOffAll();
         GPIO_GreenLedOn();
         Delay_MS(500);
-        HAL_TurnOffMotorA();
+        //HAL_TurnOffMotorA();
         GPIO_GreenLedOff();
         jamValue = 0;
         xQueueOverwrite(qJamFlag, &jamValue);
