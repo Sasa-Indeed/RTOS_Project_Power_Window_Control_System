@@ -172,7 +172,8 @@ void vPassengerWindowUpTask(void *pvParameters){
 
             sendValue = 0;
             xQueueOverwrite(qLimitDownFlag, &sendValue);
-
+            sendValue = 1;
+            xQueueOverwrite(qWindowDirectionUp, &sendValue);
 
            Delay_MS(500);
             if(read_SWT(PASSENGER_WINDOW_PORT, PASSENGER_WINDOW_UP_SWITCH_PIN)){ //Manual  mode
@@ -183,9 +184,6 @@ void vPassengerWindowUpTask(void *pvParameters){
                     xQueuePeek(qDriverFlag, &driverFlag, 0);
                 }
             }else{ //Automatic mode
-                sendValue = 1;
-                xQueueOverwrite(qWindowDirectionUp, &sendValue);
-
                 while(!upLimit && !lockFlag && !jamFlag && !driverFlag){
                     xQueuePeek(qJamFlag, &jamFlag, 0);
                     xQueuePeek(qLockFlag, &lockFlag, 0);
@@ -272,7 +270,7 @@ void vPassengerWindowDownTask(void *pvParameters){
     }
 }
 
-/* Driver Control of passenger Window up*/
+
 void vDriverWindowUpTask(void *pvParameters){
     xSemaphoreTake(sDriverUp, 0);
     uint8_t upLimit, jamFlag,  sendValue = 0;
@@ -298,7 +296,8 @@ void vDriverWindowUpTask(void *pvParameters){
 
             sendValue = 0;
             xQueueOverwrite(qLimitDownFlag, &sendValue);
-
+            sendValue = 1;
+            xQueueOverwrite(qWindowDirectionUp, &sendValue);
 
 
             Delay_MS(500);
@@ -310,9 +309,6 @@ void vDriverWindowUpTask(void *pvParameters){
                 }
 
             }else{ //Automatic mode
-                sendValue = 1;
-                xQueueOverwrite(qWindowDirectionUp, &sendValue);
-
                 while(!upLimit && !jamFlag){
                     xQueuePeek(qJamFlag, &jamFlag, 0);
                     xQueuePeek(qLimitUpFlag, &upLimit, 0);
@@ -434,20 +430,17 @@ void GPIOA_Handler(void){
 }
 
 void GPIOB_Handler(void){
-    uint8 jamFlag, lockFlag, windowUpFlag;
+    uint8 jamFlag, lockFlag;
 
     xQueuePeekFromISR(qLockFlag, &lockFlag);
-    xQueuePeekFromISR(qWindowDirectionUp, &windowUpFlag);
     portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
 
     if(GPIO_PORTB_MIS_REG & 0x1){ // Pin0 Jam Control
-        if(windowUpFlag){
-            jamFlag = 1;
-            xQueueOverwriteFromISR(qJamFlag, &jamFlag, &xHigherPriorityTaskWoken);
-            xSemaphoreGiveFromISR(sJam, &xHigherPriorityTaskWoken);
-            portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-        }
+        jamFlag = 1;
+        xQueueOverwriteFromISR(qJamFlag, &jamFlag, &xHigherPriorityTaskWoken);
+        xSemaphoreGiveFromISR(sJam, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
         GPIO_PORTB_ICR_REG   |= (1<<0);
     }else if (GPIO_PORTB_MIS_REG & 0x2){ // Pin1 Lock Control
         lockFlag ^= 0x1;

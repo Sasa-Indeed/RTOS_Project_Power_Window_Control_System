@@ -272,7 +272,7 @@ void vPassengerWindowDownTask(void *pvParameters){
     }
 }
 
-/* Driver Control of passenger Window up*/
+
 void vDriverWindowUpTask(void *pvParameters){
     xSemaphoreTake(sDriverUp, 0);
     uint8_t upLimit, jamFlag,  sendValue = 0;

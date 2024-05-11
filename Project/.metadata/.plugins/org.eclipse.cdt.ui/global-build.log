@@ -3074,3 +3074,183 @@ Finished building target: "Power_Window_Controls.out"
 gmake[1]: 'Power_Window_Controls.out' is up to date.
 
 **** Build Finished ****
+
+**** Build of configuration Debug for project Power_Window_Controls ****
+
+"D:\\ASU\\4-Senior1\\ti\\ccs1270\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Motors" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/Common" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPIO" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/UART" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPTM" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/include" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/portable/CCS/ARM_CM4F" --include_path="D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 157: error #20: identifier "the" is undefined
+"../main.c", line 158: error #66: expected a ";"
+"../main.c", line 181: warning #12-D: parsing restarts here after previous syntax error
+"../main.c", line 194: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 194: error #148: declaration is incompatible with "void HAL_TurnOffMotorA(void)" (declared at line 30 of "D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Motors/motors.h")
+"../main.c", line 195: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 195: error #148: declaration is incompatible with "void GPIO_RedLedOff(void)" (declared at line 21 of "D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPIO/gpio.h")
+"../main.c", line 196: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 196: error #148: declaration is incompatible with "void GPIO_BlueLedOff(void)" (declared at line 22 of "D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPIO/gpio.h")
+"../main.c", line 198: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 199: error #80: expected a type specifier
+"../main.c", line 199: error #80: expected a type specifier
+"../main.c", line 199: error #80: expected a type specifier
+"../main.c", line 199: error #80: expected a type specifier
+"../main.c", line 199: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 199: error #148: declaration is incompatible with "BaseType_t xQueueGenericSend(QueueHandle_t, const void *const, TickType_t, const BaseType_t)" (declared at line 657 of "D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/include/queue.h")
+"../main.c", line 201: error #80: expected a type specifier
+"../main.c", line 201: error #80: expected a type specifier
+"../main.c", line 201: error #80: expected a type specifier
+"../main.c", line 201: error #80: expected a type specifier
+"../main.c", line 201: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 202: error #171: expected a declaration
+"../main.c", line 228: warning #12-D: parsing restarts here after previous syntax error
+"../main.c", line 230: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 230: error #150: variable "sendValue" has already been initialized
+"../main.c", line 231: error #80: expected a type specifier
+"../main.c", line 231: error #80: expected a type specifier
+"../main.c", line 231: error #80: expected a type specifier
+"../main.c", line 231: error #80: expected a type specifier
+"../main.c", line 231: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 233: error #80: expected a type specifier
+"../main.c", line 233: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 233: error #148: declaration is incompatible with "void Delay_MS(unsigned long long)" (declared at line 78)
+"../main.c", line 235: error #171: expected a declaration
+"../main.c", line 256: warning #12-D: parsing restarts here after previous syntax error
+"../main.c", line 257: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 257: error #148: declaration is incompatible with "void GPIO_GreenLedOff(void)" (declared at line 23 of "D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPIO/gpio.h")
+"../main.c", line 258: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 259: error #80: expected a type specifier
+"../main.c", line 259: error #80: expected a type specifier
+"../main.c", line 259: error #80: expected a type specifier
+"../main.c", line 259: error #80: expected a type specifier
+"../main.c", line 259: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 260: error #171: expected a declaration
+"../main.c", line 286: warning #12-D: parsing restarts here after previous syntax error
+"../main.c", line 288: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 288: error #150: variable "sendValue" has already been initialized
+"../main.c", line 289: error #80: expected a type specifier
+"../main.c", line 289: error #80: expected a type specifier
+"../main.c", line 289: error #80: expected a type specifier
+"../main.c", line 289: error #80: expected a type specifier
+"../main.c", line 289: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 291: error #80: expected a type specifier
+"../main.c", line 291: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 292: error #171: expected a declaration
+"../main.c", line 311: warning #12-D: parsing restarts here after previous syntax error
+"../main.c", line 312: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 314: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 314: error #150: variable "sendValue" has already been initialized
+"../main.c", line 315: error #80: expected a type specifier
+"../main.c", line 315: error #80: expected a type specifier
+"../main.c", line 315: error #80: expected a type specifier
+"../main.c", line 315: error #80: expected a type specifier
+"../main.c", line 315: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 316: error #80: expected a type specifier
+"../main.c", line 316: error #80: expected a type specifier
+"../main.c", line 316: error #80: expected a type specifier
+"../main.c", line 316: error #80: expected a type specifier
+"../main.c", line 316: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 318: error #80: expected a type specifier
+"../main.c", line 318: error #80: expected a type specifier
+"../main.c", line 318: error #80: expected a type specifier
+"../main.c", line 318: error #80: expected a type specifier
+"../main.c", line 318: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 319: error #171: expected a declaration
+"../main.c", line 345: warning #12-D: parsing restarts here after previous syntax error
+"../main.c", line 347: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 347: error #150: variable "sendValue" has already been initialized
+"../main.c", line 348: error #80: expected a type specifier
+"../main.c", line 348: error #80: expected a type specifier
+"../main.c", line 348: error #80: expected a type specifier
+"../main.c", line 348: error #80: expected a type specifier
+"../main.c", line 348: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 350: error #80: expected a type specifier
+"../main.c", line 350: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 352: error #171: expected a declaration
+"../main.c", line 368: warning #12-D: parsing restarts here after previous syntax error
+"../main.c", line 369: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 370: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 370: error #150: variable "sendValue" has already been initialized
+"../main.c", line 371: error #80: expected a type specifier
+"../main.c", line 371: error #80: expected a type specifier
+"../main.c", line 371: error #80: expected a type specifier
+"../main.c", line 371: error #80: expected a type specifier
+"../main.c", line 371: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 373: error #80: expected a type specifier
+"../main.c", line 373: error #80: expected a type specifier
+"../main.c", line 373: error #80: expected a type specifier
+"../main.c", line 373: error #80: expected a type specifier
+"../main.c", line 373: warning #78-D: this declaration has no storage class or type specifier
+"../main.c", line 374: error #171: expected a declaration
+At end of source: warning #12-D: parsing restarts here after previous syntax error
+67 errors detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project Power_Window_Controls ****
+
+"D:\\ASU\\4-Senior1\\ti\\ccs1270\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Motors" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/Common" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPIO" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/UART" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPTM" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/include" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/portable/CCS/ARM_CM4F" --include_path="D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building target: "Power_Window_Controls.out"
+Invoking: Arm Linker
+"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Power_Window_Controls.map" --heap_size=0 --stack_size=512 -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Power_Window_Controls_linkInfo.xml" --rom_model -o "Power_Window_Controls.out" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./FreeRTOS/Source/event_groups.obj" "./FreeRTOS/Source/list.obj" "./FreeRTOS/Source/queue.obj" "./FreeRTOS/Source/tasks.obj" "./FreeRTOS/Source/timers.obj" "./FreeRTOS/Source/portable/CCS/ARM_CM4F/port.obj" "./FreeRTOS/Source/portable/CCS/ARM_CM4F/portasm.obj" "./FreeRTOS/Source/portable/MemMang/heap_1.obj" "./HAL/Motors/motors.obj" "./HAL/Window_Controls/window_control.obj" "./MCAL/GPIO/gpio.obj" "./MCAL/GPTM/GPTM.obj" "./MCAL/UART/uart0.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "Power_Window_Controls.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project Power_Window_Controls ****
+
+"D:\\ASU\\4-Senior1\\ti\\ccs1270\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Motors" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/Common" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPIO" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/UART" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPTM" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/include" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/portable/CCS/ARM_CM4F" --include_path="D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building target: "Power_Window_Controls.out"
+Invoking: Arm Linker
+"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Power_Window_Controls.map" --heap_size=0 --stack_size=512 -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Power_Window_Controls_linkInfo.xml" --rom_model -o "Power_Window_Controls.out" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./FreeRTOS/Source/event_groups.obj" "./FreeRTOS/Source/list.obj" "./FreeRTOS/Source/queue.obj" "./FreeRTOS/Source/tasks.obj" "./FreeRTOS/Source/timers.obj" "./FreeRTOS/Source/portable/CCS/ARM_CM4F/port.obj" "./FreeRTOS/Source/portable/CCS/ARM_CM4F/portasm.obj" "./FreeRTOS/Source/portable/MemMang/heap_1.obj" "./HAL/Motors/motors.obj" "./HAL/Window_Controls/window_control.obj" "./MCAL/GPIO/gpio.obj" "./MCAL/GPTM/GPTM.obj" "./MCAL/UART/uart0.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "Power_Window_Controls.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project Power_Window_Controls ****
+
+"D:\\ASU\\4-Senior1\\ti\\ccs1270\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Motors" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL/Window_Controls" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/Common" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPIO" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/HAL" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/UART" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/MCAL/GPTM" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/include" --include_path="D:/ASU/4-Senior1/Spring 24/CSE411 Real Time Embedded Systems/Project/Project/Power_Window_Controls/FreeRTOS/Source/portable/CCS/ARM_CM4F" --include_path="D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building target: "Power_Window_Controls.out"
+Invoking: Arm Linker
+"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Power_Window_Controls.map" --heap_size=0 --stack_size=512 -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"D:/ASU/4-Senior1/ti/ccs1270/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Power_Window_Controls_linkInfo.xml" --rom_model -o "Power_Window_Controls.out" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./FreeRTOS/Source/event_groups.obj" "./FreeRTOS/Source/list.obj" "./FreeRTOS/Source/queue.obj" "./FreeRTOS/Source/tasks.obj" "./FreeRTOS/Source/timers.obj" "./FreeRTOS/Source/portable/CCS/ARM_CM4F/port.obj" "./FreeRTOS/Source/portable/CCS/ARM_CM4F/portasm.obj" "./FreeRTOS/Source/portable/MemMang/heap_1.obj" "./HAL/Motors/motors.obj" "./HAL/Window_Controls/window_control.obj" "./MCAL/GPIO/gpio.obj" "./MCAL/GPTM/GPTM.obj" "./MCAL/UART/uart0.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "Power_Window_Controls.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project Power_Window_Controls ****
+
+"D:\\ASU\\4-Senior1\\ti\\ccs1270\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+gmake[1]: 'Power_Window_Controls.out' is up to date.
+
+**** Build Finished ****
